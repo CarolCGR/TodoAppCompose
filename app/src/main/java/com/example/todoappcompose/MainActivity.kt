@@ -15,10 +15,12 @@ import androidx.compose.ui.unit.sp
 import com.example.todoappcompose.ui.theme.TodoAppComposeTheme
 import androidx.compose.ui.text.style.TextDecoration
 
+
 data class Task(
     val title: String,
     val isCompleted: Boolean = false
 )
+
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +35,8 @@ class MainActivity : ComponentActivity() {
 
                     "menu" -> MainMenuScreen(
                         onTodoClick = { currentScreen = "todo" },
-                        onCounterClick = { currentScreen = "counter" }
+                        onCounterClick = { currentScreen = "counter" },
+                        onQuizClick = { currentScreen = "quiz" }
                     )
 
                     "todo" -> TodoScreen(
@@ -43,17 +46,24 @@ class MainActivity : ComponentActivity() {
                     "counter" -> CounterScreen(
                         onBack = { currentScreen = "menu" }
                     )
+
+                    "quiz" -> QuizScreen(
+                        onBack = { currentScreen = "menu" }
+                    )
                 }
             }
         }
     }
 }
 
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainMenuScreen(
     onTodoClick: () -> Unit,
-    onCounterClick: () -> Unit
+    onCounterClick: () -> Unit,
+    onQuizClick: () -> Unit
 ) {
 
     Scaffold(
@@ -61,7 +71,7 @@ fun MainMenuScreen(
             TopAppBar(
                 title = {
                     Text(
-                        "Menú Principal ✧˖°. ⋆｡˚✿｡･:*˚:✧｡ ",
+                        "Menú Principal ✧˖°. ⋆｡˚✿｡･:*˚:✧｡",
                         fontSize = 22.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.White
@@ -89,7 +99,7 @@ fun MainMenuScreen(
                     containerColor = Color(0xFFBA68C8)
                 )
             ) {
-                Text("Counter App ≽^•⩊•^≼ ", fontSize = 18.sp)
+                Text("Counter App ≽^•⩊•^≼", fontSize = 18.sp)
             }
 
             Spacer(modifier = Modifier.height(20.dp))
@@ -100,11 +110,24 @@ fun MainMenuScreen(
                     containerColor = Color(0xFFBA68C8)
                 )
             ) {
-                Text("Todo App ૮˶• ﻌ •˶ა ", fontSize = 18.sp)
+                Text("Todo App ૮˶• ﻌ •˶ა", fontSize = 18.sp)
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            Button(
+                onClick = onQuizClick,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFBA68C8)
+                )
+            ) {
+                Text("Trivia App 〜(꒪꒳꒪)〜 ", fontSize = 18.sp)
             }
         }
     }
 }
+
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -210,6 +233,8 @@ fun TodoScreen(onBack: () -> Unit) {
         }
     }
 }
+
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
